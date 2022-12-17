@@ -5,9 +5,13 @@ import Register from './components/frontend/auth/Register';
 // import Dashboard from './components/admin/Dashboard';
 // import Profile from './components/admin/Profile';
 import Home from './components/frontend/Home';
-
+import axios from 'axios';
 import MasterLayout from './layouts/admin/MasterLayout';
 
+axios.defaults.baseURL = 'http://localhost:8000/'
+axios.defaults.headers.post['Content-Type'] = 'application/json';
+axios.defaults.headers.post['Accept'] = 'application/json';
+axios.defaults.withCredentials = true;
 function App() {
   return (
     <div className="App">

@@ -24,11 +24,11 @@ function Register() {
             email: registerInput.email,
             password: registerInput.password,
         };
-
+        axios.get('/sanctum/csrf-cookie').then(response => {
         axios.post('/api/register', data).then(res => {
 
         });
-
+      })
     };
 
 
