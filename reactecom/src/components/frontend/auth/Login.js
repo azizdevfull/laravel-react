@@ -8,7 +8,7 @@ import { useHistory } from 'react-router-dom';
 function Login() {
 
   const history = useHistory();
-  
+
   const [loginInput, setLogin] = useState({
     email: '',
     password: '',
@@ -34,19 +34,25 @@ const loginSubmit = (e) => {
         {
             localStorage.setItem('auth_token', res.data.token);
             localStorage.setItem('auth_name', res.data.username);
-            swal("Success",res.data.message,"success");
+            swal("Success",res.data.messages,"success");
             if(res.data.role === 'admin')
             {
                 history.push('/admin/dashboard');
             }
             else
             {
-                history.push('/');
+              const rel = swal("");
+              history.push('/');
+  
+              if (rel) {
+                window.location.reload();
+                swal("Success", res.data.messages,"success");
+              }
             }
         }
         else if(res.data.status === 401)
         {
-            swal("Warning",res.data.message,"warning");
+            swal("Warning",res.data.messages,"warning");
         }
         else
         {
@@ -59,42 +65,35 @@ const loginSubmit = (e) => {
 
   return (
     <div>
-      <Navbar />
-      <div className="container py-5">
-        <div className="row justify-content-center">
-          <div className="col-md-6">
-            <div className="card">
-              <div className="card-header">
-                <h4>Login</h4>
-              </div>
-              <div className="card-body">
-                <form onSubmit={loginSubmit}>
-                  <div className="form-group mb-3">
-                    <label>Email</label>
-                    <input type="text" name="email" onChange={handleInput} value={loginInput.email} className="form-control" />
-                  </div>
-                  <div className="form-group mb-3">
-                    <label>Password</label>
-                    <input
-                      type="password"
-                      name="password"
-                      onChange={handleInput} 
-                      value={loginInput.password}
-                      className="form-control"
-                    />
-                  </div>
-                  <div className="form-group mb-3">
-                    <button type="submit" className="btn btn-primary">
-                      Login
-                    </button>
-                  </div>
-                </form>
-              </div>
+            <div className="container py-5">
+                <div className="row justify-content-center">
+                    <div className="col-md-6">
+                        <div className="card">
+                            <div className="card-header">
+                                <h4>Login</h4>
+                            </div>
+                            <div className="card-body">
+                                <form onSubmit={loginSubmit}>
+                                    <div className="form-group mb-3">
+                                        <label>Email ID</label>
+                                        <input type="email" name="email" onChange={handleInput} value={loginInput.email} className="form-control" />
+                                        <span>{loginInput.error_list.email}</span>
+                                    </div>
+                                    <div className="form-group mb-3">
+                                        <label>Password</label>
+                                        <input type="password" name="password" onChange={handleInput} value={loginInput.password} className="form-control" />
+                                        <span>{loginInput.error_list.password}</span>
+                                    </div>
+                                    <div className="form-group mb-3">
+                                        <button type="submit" className="btn btn-primary">Login</button>
+                                    </div>
+                                </form>
+                            </div>
+                        </div>
+                    </div>
+                </div>
             </div>
-          </div>
         </div>
-      </div>
-    </div>
   );
 }
 
