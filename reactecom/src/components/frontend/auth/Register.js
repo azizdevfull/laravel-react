@@ -1,9 +1,13 @@
 import React, { useState } from "react";
 import Navbar from "../../../layouts/frontend/Navbar";
 import axios from 'axios';
+import swal from 'sweetalert';
+import { useHistory } from "react-router-dom";
+
 
 function Register() {
 
+    const history = useHistory();
     const [registerInput, setRegister] = useState({
         name: '',
         email: '',
@@ -12,7 +16,7 @@ function Register() {
     });
 
     const handleInput = (e) => {
-        e.presists();
+        e.persist();
         setRegister({...registerInput, [e.target.name]: e.target.value});
     };
 
@@ -25,9 +29,26 @@ function Register() {
             password: registerInput.password,
         };
         axios.get('/sanctum/csrf-cookie').then(response => {
-        axios.post('/api/register', data).then(res => {
 
+        axios.post('/api/register', data).then(res => {
+          if (res.data.status === 200) 
+          {
+            
+            localStorage.setItem('auth_token', res.data.token);
+            localStorage.setItem('auth_name', res.data.username);
+            const rel = swal("");
+            history.push('/');
+
+            if (rel) {
+              window.location.reload();
+              swal("Success", res.data.messages,"success");
+            }
+
+          } else {
+            setRegister({ ...registerInput, error_list: res.data.validation_errors });
+          }
         });
+
       })
     };
 
@@ -48,14 +69,17 @@ function Register() {
                     <div className="form-group mb-3">
                         <label>Full Name</label>
                         <input type="text" name="name" onChange={handleInput} value={registerInput.name} className="form-control" />
+                        <span>{registerInput.error_list.name}</span>
                     </div>
                     <div className="form-group mb-3">
                         <label>Email</label>
                         <input type="text" name="email" onChange={handleInput} value={registerInput.email} className="form-control" />
+                        <span >{registerInput.error_list.email}</span>
                     </div>
                     <div className="form-group mb-3">
                         <label>Password</label>
                         <input type="text" name="password" onChange={handleInput} value={registerInput.password} className="form-control" />
+                        <span>{registerInput.error_list.password}</span>
                     </div>
                     <div className="form-group mb-3">
                     <button type="submit" className="btn btn-primary">Register</button>
