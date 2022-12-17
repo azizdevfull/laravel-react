@@ -1,5 +1,6 @@
 import React, { useState } from "react";
 import Navbar from "../../../layouts/frontend/Navbar";
+import axios from 'axios';
 
 function Register() {
 
@@ -24,7 +25,9 @@ function Register() {
             password: registerInput.password,
         };
 
-        // axios
+        axios.post('/api/register', data).then(res => {
+
+        });
 
     };
 
