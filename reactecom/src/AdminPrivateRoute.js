@@ -31,15 +31,31 @@ function AdminPrivateRoute({...rest}) {
         {
             swal("Unauthorized",err.response.data.message,"warning");
             history.push('/');
-            return Promise.reject(err);
         }
+        return Promise.reject(err);
     });
 
-
-    if (loading) 
+    axios.interceptors.response.use(function (response) {
+            return response;
+        }, function (error) {
+            if(error.response.status === 403) // Access Denied
+            {
+                swal("Forbidden",error.response.data.message,"warning");
+                history.push('/403');
+            }
+            else if(error.response.status === 404) //Page Not Found
+            {
+                swal("404 Error","Url/Page Not Found","warning");
+                history.push('/404');
+            }
+            return Promise.reject(error);
+        }
+    );
+    if(loading)
     {
-        return <h1>Loading...</h1>    
+        return <h1>Loading...</h1>
     }
+
 
     return (
 
