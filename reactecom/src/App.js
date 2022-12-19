@@ -7,6 +7,7 @@ import Register from './components/frontend/auth/Register';
 import Home from './components/frontend/Home';
 import axios from 'axios';
 import MasterLayout from './layouts/admin/MasterLayout';
+import AdminPrivateRoute from './AdminPrivateRoute';
 
 axios.defaults.baseURL = 'http://localhost:8000/'
 axios.defaults.headers.post['Content-Type'] = 'application/json';
@@ -31,8 +32,8 @@ function App() {
           <Route exact path="/" component={Home}/>
           <Route exact path="/login" component={Login}/>
           <Route exact path="/register" component={Register}/>
-          <Route path="/admin" name="Admin" render={(props) => <MasterLayout {...props} /> } />
-        
+          {/* <Route path="/admin" name="Admin" render={(props) => <MasterLayout {...props} /> } /> */}
+          <AdminPrivateRoute path="/admin" name="Admin" />
         </Switch>
       </Router>
       </BrowserRouter>
