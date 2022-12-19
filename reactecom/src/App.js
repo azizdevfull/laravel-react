@@ -1,5 +1,5 @@
 import React from 'react';
-import {BrowserRouter as Router, Switch, Route} from 'react-router-dom';
+import {BrowserRouter as Router, Switch, Route, BrowserRouter} from 'react-router-dom';
 import Login from './components/frontend/auth/Login';
 import Register from './components/frontend/auth/Register';
 // import Dashboard from './components/admin/Dashboard';
@@ -24,6 +24,7 @@ axios.interceptors.request.use(function (config){
 function App() {
   return (
     <div className="App">
+      <BrowserRouter>
       <Router>
         <Switch>
 
@@ -34,6 +35,7 @@ function App() {
         
         </Switch>
       </Router>
+      </BrowserRouter>
     </div>
   );
 }
