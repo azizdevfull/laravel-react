@@ -41,13 +41,10 @@ const loginSubmit = (e) => {
             }
             else
             {
-              const rel = swal("");
+                swal("Success", res.data.messages,"success");
               history.push('/');
   
-              if (rel) {
-                window.location.reload();
-                swal("Success", res.data.messages,"success");
-              }
+              
             }
         }
         else if(res.data.status === 401)

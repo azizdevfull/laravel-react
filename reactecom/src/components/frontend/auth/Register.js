@@ -36,13 +36,9 @@ function Register() {
             
             localStorage.setItem('auth_token', res.data.token);
             localStorage.setItem('auth_name', res.data.username);
-            const rel = swal("");
+            swal("Success", res.data.messages,"success");
             history.push('/');
 
-            if (rel) {
-              window.location.reload();
-              swal("Success", res.data.messages,"success");
-            }
 
           } else {
             setRegister({ ...registerInput, error_list: res.data.validation_errors });

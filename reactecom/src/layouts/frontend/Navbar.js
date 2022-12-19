@@ -15,12 +15,10 @@ function Navbar() {
             {
                 localStorage.removeItem('auth_token');
                 localStorage.removeItem('auth_name');
-                const aziz = swal("Success",res.data.messages,"success");
+               swal("Success",res.data.messages,"success");
                 history.push('/');
 
-                if (aziz) {
-                  window.location.reload();
-                }
+              
             }
         });
 
