@@ -1,5 +1,5 @@
 import React from 'react';
-import {BrowserRouter as Router, Switch, Route, BrowserRouter} from 'react-router-dom';
+import {BrowserRouter as Router, Switch, Route, BrowserRouter, Redirect} from 'react-router-dom';
 import Login from './components/frontend/auth/Login';
 import Register from './components/frontend/auth/Register';
 // import Dashboard from './components/admin/Dashboard';
@@ -30,8 +30,12 @@ function App() {
         <Switch>
 
           <Route exact path="/" component={Home}/>
-          <Route exact path="/login" component={Login}/>
-          <Route exact path="/register" component={Register}/>
+          <Route path="/login">
+              {localStorage.getItem('auth_token') ? <Redirect to='/' /> : <Login />}
+            </Route>
+            <Route path="/register">
+              {localStorage.getItem('auth_token') ? <Redirect to='/' /> : <Register />}
+            </Route>
           {/* <Route path="/admin" name="Admin" render={(props) => <MasterLayout {...props} /> } /> */}
           <AdminPrivateRoute path="/admin" name="Admin" />
         </Switch>
