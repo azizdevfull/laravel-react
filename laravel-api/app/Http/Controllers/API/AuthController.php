@@ -17,6 +17,7 @@ class AuthController extends Controller
             'email'=>'required|email|max:191|unique:users,email',
             'password'=>'required|min:8',
         ]);
+
         if($validator->fails())
         {
             return response()->json([
@@ -31,13 +32,22 @@ class AuthController extends Controller
                 'password' => Hash::make($request->password),
             ]);
 
-            $token = $user->createToken($user->email . '_Token')->plainTextToken;
-            
+            if ($user->role_as == 1) // 1 = Admin 
+            {
+                $role = 'admin';
+                $token = $user->createToken($user->email . '_AdminToken', ['server:admin'])->plainTextToken;
+                
+            }
+            else {
+                $role = '';
+                $token = $user->createToken($user->email . '_Token', [''])->plainTextToken;
+            }
             return response()->json([
                 'status'=>200,
                 'username'=>$user->name,
                 'token'=>$token,
-                'messages'=> 'Registered Successfully!'
+                'messages'=> 'Registered Successfully!',
+                'role'=>$role
             ]);
         }
     }
