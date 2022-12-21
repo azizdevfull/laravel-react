@@ -18,6 +18,14 @@ function ViewCategory(){
 
     }, [])
     
+    const deleteCategory = (e, id) => {
+        e.preventDefault();
+
+        const thisClicked = e.currentTarget;
+        thisClicked.innerText = "Deleting";
+
+    };
+
     var ViewCategory_HTMLTABLE = "";
     if(loading)
     {
@@ -37,7 +45,7 @@ function ViewCategory(){
                     <Link to={`edit-category/${item.id}`} className="btn btn-success btn-sm">Edit</Link>
                 </td>
                 <td>
-                    <button type="button" className="btn btn-danger btn-sm">Delete</button>
+                    <button type="button" onClick={ (e) => deleteCategory(e,item.id) } className="btn btn-danger btn-sm">Delete</button>
                 </td>
             </tr>
            ) 
