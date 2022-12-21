@@ -1,6 +1,7 @@
 import axios from "axios";
 import React, { useEffect, useState } from "react";
 import {Link} from "react-router-dom";
+import swal from "sweetalert";
 function ViewCategory(){
 
     const [loading, setLoading] = useState(true);
@@ -23,6 +24,17 @@ function ViewCategory(){
 
         const thisClicked = e.currentTarget;
         thisClicked.innerText = "Deleting";
+
+        axios.delete(`/api/delete-category/${id}`).then(res => {
+            if (res.data.status === 200) {
+                swal("Success", res.data.message, "success");
+                thisClicked.closest("tr").remove();
+            }
+            else if(res.data.status === 404) {
+                swal("Success", res.data.message, "success");
+                thisClicked.innerText = "Deleting";
+            }
+        });
 
     };
 
