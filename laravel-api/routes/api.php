@@ -3,6 +3,7 @@
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Route;
 use App\Http\Controllers\API\AuthController;
+use App\Http\Controllers\API\ProductController;
 use App\Http\Controllers\API\CategoryController;
 
 /*
@@ -29,6 +30,12 @@ Route::middleware('auth:sanctum','isAPIAdmin')->group(function () {
     Route::get('edit-category/{id}', [CategoryController::class, 'edit']);
     Route::put('update-category/{id}', [CategoryController::class, 'update']);
     Route::delete('delete-category/{id}', [CategoryController::class, 'destroy']);
+    Route::get('all-category', [CategoryController::class, 'allcategory']);
+
+    // Products
+    // Route::get('view-product', [ProductController::class, 'index']);
+    Route::post('store-product', [ProductController::class,'store']);
+    // Route::get('edit-product/{id}', [ProductController::class, 'edit']);
 });
 
 Route::middleware('auth:sanctum')->group(function () {
