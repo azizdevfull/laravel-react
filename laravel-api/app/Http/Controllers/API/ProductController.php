@@ -23,7 +23,7 @@ class ProductController extends Controller
     public function store(Request $request)
     {
         $validator = Validator::make($request->all(), [
-            'category_id' =>'required|max:191',
+            'category_id' =>'required|integer|max:191',
             'slug' =>'required|max:191',
             'name' =>'required|max:191',
             'meta_title' =>'required|max:191',
