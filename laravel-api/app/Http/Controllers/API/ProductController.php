@@ -46,13 +46,24 @@ class ProductController extends Controller
             $product->original_price = $request->input('original_price');
             $product->qty = $request->input('qty');
 
+            // if($request->hasFile('image')){
+
+            //     $image = $request->image;
+                
+            //     $imagename = time().'.'.$image->getClientOriginalExtension();
+                
+            //     $request->image->move('/uploads/product/',$imagename);
+                
+            //     $product->image = $imagename;
+            // }
+
             if($request->hasFile('image'))
             {
                 $file = $request->file('image');
                 $extension = $file->getClientOriginalExtension();
                 $filename = time() . '.' . $extension;
-                $file->move('uploads/product/' . $filename);
-                $product->image = 'uploads/product/' . $filename;
+                $file->move('uploads/product/' , $filename);
+                $product->image = 'uploads/product/'.$filename;
             }
 
             $product->featured = $request->input('featured') == true ? '1':'0';
@@ -63,7 +74,7 @@ class ProductController extends Controller
 
             return response()->json([
                 'status' =>200,
-                'product' => 'Product Added Succesfully!',
+                'message' => 'Product Added Succesfully!',
             ]);
         }
     }
