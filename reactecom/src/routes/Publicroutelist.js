@@ -8,7 +8,7 @@ import Login from '../components/frontend/auth/Login';
 import ViewCategory from '../components/frontend/collections/ViewCategory';
 import ViewProduct from '../components/frontend/collections/ViewProduct';
 import ProductDetail from '../components/frontend/collections/ProductDetail';
-// import Cart from '../components/frontend/Cart';
+import Cart from '../components/frontend/Cart';
 // import Checkout from '../components/frontend/Checkout';
 // import Thankyou from '../components/frontend/Thankyou';
 
@@ -23,7 +23,7 @@ const publicRoutesList = [
     { path: '/collections', exact: true, name: 'ViewCategory', component: ViewCategory },
     { path: '/collections/:slug', exact: true, name: 'ViewProduct', component: ViewProduct },
     { path: '/collections/:category/:product', exact: true, name: 'ProductDetail', component: ProductDetail },
-    // { path: '/cart', exact: true, name: 'Cart', component: Cart },
+    { path: '/cart', exact: true, name: 'Cart', component: Cart },
     // { path: '/checkout', exact: true, name: 'Checkout', component: Checkout },
     // { path: '/thank-you', exact: true, name: 'Thankyou', component: Thankyou },
 ];

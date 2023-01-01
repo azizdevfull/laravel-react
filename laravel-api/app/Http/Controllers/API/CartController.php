@@ -23,7 +23,7 @@ class CartController extends Controller
                 if (Cart::where('product_id',$product_id)->where('user_id',$user_id)->exists()) {
 
                     return response()->json([
-                        'start' => 409,
+                        'status' => 409,
                         'message' => $productCheck->name . ' Already Added To Cart!',
                        ]);
 
@@ -36,7 +36,7 @@ class CartController extends Controller
                     $cartitem->product_qty = $product_qty;
                     $cartitem->save();
                     return response()->json([
-                        'start' => 201,
+                        'status' => 201,
                         'message' => 'Added to Cart',
                        ]);
                 }
@@ -48,16 +48,39 @@ class CartController extends Controller
             {
 
                 return response()->json([
-                    'start' => 404,
+                    'status' => 404,
                     'message' => 'Product not found!',
                    ]);
 
             }
         } else {
            return response()->json([
-            'start' => 401,
+            'status' => 401,
             'message' => 'Login to Add to Cart',
            ]);
+        }
+
+    }
+    public function viewcart()
+    {
+
+        if (auth('sanctum')->check())
+        {
+            $user_id = auth('sanctum')->user()->id;
+            $cartitems = Cart::where('user_id', $user_id)->get();
+
+            return response()->json([
+                'status' => 200,
+                'cart' => $cartitems,
+               ]);
+
+        }
+        else
+        {
+            return response()->json([
+                'status' => 401,
+                'message' => 'Login to View Cart Data',
+               ]);
         }
 
     }
