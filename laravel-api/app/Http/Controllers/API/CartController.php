@@ -7,6 +7,7 @@ use App\Models\Product;
 use Illuminate\Http\Request;
 use App\Http\Controllers\Controller;
 use Illuminate\Support\Facades\Auth;
+use PharIo\Manifest\Author;
 
 class CartController extends Controller
 {
@@ -111,6 +112,37 @@ class CartController extends Controller
                 'status' => 401,
                 'message' => 'Login To Continue!',
                ]);
+        }
+    }
+    public function deleteCartitem($cart_id)
+    {
+        if(auth('sanctum')->check())
+        {
+            $user_id = auth('sanctum')->user()->id;
+            $cartitem = Cart::where('id',$cart_id)->where('user_id',$user_id)->first();
+            if($cartitem)
+            {
+                $cartitem->delete();
+
+                return response()->json([
+                    'status' =>200,
+                    'message' => 'Cart Item Removed Successfully',
+                ]);
+            }
+            else
+            {
+                return response()->json([
+                    'status' =>404,
+                    'message' => 'Cart Item Not Found!',
+                ]);
+            }
+        }
+        else
+        {
+            return response()->json([
+                'status' =>401,
+                'message' => 'Login To Continue!',
+            ]);
         }
     }
 }
