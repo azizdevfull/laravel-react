@@ -109,14 +109,14 @@ function Cart()
                     </thead>
                     <tbody>
                         {cart.map( (item, idx) => {
-                            // totalCartPrice += item.product.selling_price * item.product_qty;
+                            totalCartPrice += item.product.selling_price * item.product_qty;
                             return (
                             <tr key={idx}>
                                 <td width="10%">
                                     <img src={`http://localhost:8000/${item.product.image}`} alt={item.product.name} width="50px" height="50px" />
                                 </td>
                                 <td>{item.product.name}</td>
-                                {/* <td width="15%" className="text-center">{item.product.selling_price}</td> */}
+                                <td width="15%" className="text-center">{item.product.selling_price}</td>
                                 <td width="15%">
                                     <div className="input-group">
                                         <button type="button" onClick={() => handleDecrement(item.id)} className="input-group-text">-</button>
@@ -124,7 +124,7 @@ function Cart()
                                         <button type="button" onClick={() => handleIncrement(item.id)} className="input-group-text">+</button>
                                     </div>
                                 </td>
-                                {/* <td width="15%" className="text-center">{item.product.selling_price * item.product_qty}</td> */}
+                                <td width="15%" className="text-center">{item.product.selling_price * item.product_qty}</td>
                                 <td width="10%">
                                     <button type="button" onClick={ (e) => deleteCartItem(e, item.id) } className="btn btn-danger btn-sm">Remove</button>
                                 </td>
@@ -139,10 +139,10 @@ function Cart()
                 <div className="col-md-4">
                     <div className="card card-body mt-3">
                         <h4>Sub Total:
-                            {/* <span className="float-end">{totalCartPrice}</span> */}
+                            <span className="float-end">{totalCartPrice}</span>
                         </h4>
                         <h4>Grand Total:
-                            {/* <span className="float-end">{totalCartPrice}</span> */}
+                            <span className="float-end">{totalCartPrice}</span>
                         </h4>
                         <hr />
                         <Link to="/checkout" className="btn btn-primary"> Checkout </Link>

@@ -84,4 +84,33 @@ class CartController extends Controller
         }
 
     }
+    public function updatequantity($cart_id, $scope)
+    {
+        if (auth('sanctum')->check())
+        {
+            $user_id = auth('sanctum')->user()->id;
+            $cartitem = Cart::where('id',$cart_id)->where('user_id',$user_id)->first();
+            if ($scope == "inc") {
+                $cartitem->product_qty += 1;
+            }
+            else if($scope == "dec")
+            {
+                $cartitem->product_qty -= 1;
+            }
+            $cartitem->update();
+
+            return response()->json([
+                'status' => 200,
+                'message' => 'Quantity Updated',
+               ]);
+
+            }
+        else
+        {
+            return response()->json([
+                'status' => 401,
+                'message' => 'Login To Continue!',
+               ]);
+        }
+    }
 }
