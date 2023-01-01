@@ -8,6 +8,7 @@ use App\Http\Controllers\Controller;
 use App\Models\Cart;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\Validator;
+use Laravel\Ui\Presets\React;
 
 class CheckoutController extends Controller
 {
@@ -50,7 +51,7 @@ class CheckoutController extends Controller
                 $order->zipcode = $request->zipcode;
                 // $order->remark = $request->remark;
 
-                $order->payment_mode = "COD";
+                $order->payment_mode = $request->payment_mode;
                 $order->tracking_no = 'fundaecom'.rand(1111,9999);
                 $order->save();
 
@@ -87,5 +88,46 @@ class CheckoutController extends Controller
             ]);
         }
 
+    }
+
+    public function validateOrder(Request $request)
+    {
+        if (auth('sanctum')->check()) {
+
+            $validator = Validator::make($request->all(), [
+
+                'firstname' => 'required|max:191',
+                'lastname' => 'required|max:191',
+                'phone' => 'required|max:191',
+                'email' => 'required|max:191',
+                'address' => 'required|max:191',
+                'city' => 'required|max:191',
+                'state' => 'required|max:191',
+                'zipcode' => 'required|max:191',
+
+            ]);
+
+            if ($validator->fails()) {
+                return response()->json([
+                    'status' => 422,
+                    'errors' => $validator->messages(),
+                ]);
+            }
+            else
+            {
+                return response()->json([
+                    'status' => 200,
+                    'message' => 'Form Validated Successfully',
+                ]);
+            }
+
+        }
+        else
+        {
+            return response()->json([
+                'status' => 401,
+                'message' => 'Login to Continue',
+            ]);
+        }
     }
 }
